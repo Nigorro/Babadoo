@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var GoodsSchema = new Schema({
-    type: Number,
+    type: String,
     title: String,
     description: String,
     date: {
@@ -21,20 +21,20 @@ var GoodsSchema = new Schema({
     },
     sellerId: String,
     contacts: {
-        address {
+        address: {
             cityId: Number,
             street: String,
         },
     },
 
-    settings {
+    settings: {
         gender: String,
         season: String,
         age: {
             min: { type: Number },
             max: { type: Number } 
         },
-    }
+    },
 
     keyWords: [],
     views: [],
