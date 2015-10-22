@@ -1,0 +1,1 @@
+goods.model.spec.js
