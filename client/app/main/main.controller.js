@@ -9,9 +9,9 @@ angular.module('babadooApp')
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
-    // Goods.findOne('5628d9adf73b2f85235fdb74').then(function(article) {
-    //   $scope.article = article;
-    // });
+    Goods.findAll().then(function (goods) {
+      $scope.goods = goods;
+    });
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;

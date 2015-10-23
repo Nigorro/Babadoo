@@ -8,15 +8,15 @@ angular.module('babadooApp')
     this.goods = Goods.createEmpty();
     this.currentUser = Auth.getCurrentUser();
 
-    this.goods.sellerId = this.currentUser._id;
-
     this.addGoods = function () {
-        console.log(this.goods);
-        if (this.goods.create() === 201) {
-            this.goods = Goods.createEmpty()
-        } else {
-            console.log('error');
-        }
+        this.goods.sellerId = this.currentUser._id;
+        this.goods.photos = [{
+            original: 'https://placeimg.com/640/490/nature',
+            thumbnail: 'https://placeimg.com/240/128/nature',
+        }]
+        this.goods.create()
+        this.goods = Goods.createEmpty();
+        console.log('createEmpty')
     }
 
   });

@@ -40,6 +40,7 @@ var GoodsSchema = new Schema({
         original: String,
         thumbnail: String
     }],
+
     keyWords: [],
     views: [],
 });
