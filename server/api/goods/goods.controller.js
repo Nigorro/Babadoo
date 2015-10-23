@@ -62,6 +62,15 @@ exports.show = function (req, res) {
     })
 }
 
+//Get all Goods where userId 
+exports.getAllByUserId = function (req, res) {
+    Goods.find({ sellerId: req.params.id }, function (err, goods) {
+        if (err) { return handleError(res, err); };
+        if (!goods) { return res.status(404).send('Not Found'); };
+        return res.status(200).json(goods);
+    });
+}
+
 function handleError(res, err) {
   return res.status(500).send(err);
 }

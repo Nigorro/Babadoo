@@ -67,12 +67,26 @@ angular.module('babadooApp')
       return deferred.promise;
     },
 
-    deleteByID: function (id) {
+    removeByID: function (id) {
         $http.delete(apiUrl+id).success( function (data) {
           console.log('Goods', id, 'was removed!');
         }).error(function (){
           console.log('Error! Something was wrong!');
         })
+    },
+
+    getAllByUserId: function (id) {
+      var deferred = $q.defer();
+      var scope = this;
+      var data = {};
+      $http.get(apiUrl + 'user/' + id).success( function (result){
+        result.forEach( function (data) {
+          goods.push( new GoodsModel(data));
+        });
+        deferred.resolve(goods);
+      }).error(function() {
+        deferred.reject();
+      });
     },
 
     createEmpty: function () {
