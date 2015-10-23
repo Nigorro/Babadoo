@@ -1,0 +1,50 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+      {{NewGoodsCtrl.goods}}
+      <h1>Добавить объявление</h1>
+      <form class="form" name="newGoods">
+        <div class="form-group" ng-class="{'has-success': newGoods.title.$valid, 'has-error':  newGoods.title.$invalid}">
+          <label>Название</label>
+          <input type="text" name="title" class="form-control" ng-model="NewGoodsCtrl.goods.title" placeholder="Например: Футболка Nike" required/>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.description.$valid, 'has-error':  newGoods.description.$invalid}">
+          <label>Описание</label>
+          <textarea type="text" name="description" class="form-control" ng-model="NewGoodsCtrl.goods.description" placeholder="Например: Совершенно новая, одевалась только два раза" required></textarea>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.price.$valid, 'has-error':  newGoods.price.$invalid}">
+          <label>Стоимость</label>
+          <input type="number" name="price" class="form-control" ng-model="NewGoodsCtrl.goods.price" placeholder="Например: 1230" required/>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.settings.gender.$valid, 'has-error':  newGoods.settings.gender.$invalid}">
+          <label>Кому</label>
+          <input type="text" name="settings.gender" class="form-control" ng-model="NewGoodsCtrl.goods.settings.gender" placeholder="Например: малчик" required/>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.settings.gender.$valid, 'has-error':  newGoods.settings.gender.$invalid}">
+          <label>Сезон</label>
+          <input type="text" name="settings.season" class="form-control" ng-model="NewGoodsCtrl.goods.settings.season" placeholder="Например: зима" required/>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.settings.age.min.$valid, 'has-error':  newGoods.settings.age.min.$invalid}">
+          <label>Возраст</label>
+          <input type="number" name="settings.age.min" class="form-control" ng-model="NewGoodsCtrl.goods.settings.age.min" placeholder="Например: 5" required/>
+        </div>
+
+        <div class="form-group" ng-class="{'has-success': newGoods.keyWords.$valid, 'has-error':  newGoods.keyWords.$invalid}">
+          <label>Ключевые слова</label>
+          <input type="text" name="keyWords" class="form-control" ng-model="NewGoodsCtrl.goods.keyWords" placeholder="Например: мальчик, зима, осень" required/>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-lg" ng-click="NewGoodsCtrl.addGoods()" ng-disabled="newGoods.$invalid">
+            Добавить
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

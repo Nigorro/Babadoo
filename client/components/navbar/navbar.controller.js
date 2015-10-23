@@ -5,6 +5,10 @@ angular.module('babadooApp')
     $scope.menu = [{
       'title': 'Home',
       'link': '/'
+      },
+      {
+      'title': 'Добавить',
+      'link': '/dobavit/'
     }];
 
     $scope.isCollapsed = true;

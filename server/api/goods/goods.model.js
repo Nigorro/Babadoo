@@ -36,6 +36,10 @@ var GoodsSchema = new Schema({
         },
     },
 
+    photos: [{
+        original: String,
+        thumbnail: String
+    }],
     keyWords: [],
     views: [],
 });

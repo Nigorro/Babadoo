@@ -2,6 +2,7 @@
 
 /**
  * Removes server error when user updates input
+ * https://makeomatic.ru/blog/2014/09/18/Angular_data_modelling/
  */
 angular.module('babadooApp')
   .factory('Goods', function ($http, $q) {
@@ -20,16 +21,20 @@ angular.module('babadooApp')
   GoodsModel.prototype.create = function () {
     $http.post(apiUrl, this).success(function (data, status, headers, config) {
       console.log(status);
+      return status;
     }).error( function (data, status, headers, config) {
       console.log(status);
+      return status;
     });
   };
 
   GoodsModel.prototype.update = function () {
     return $http.put(apiUrl + this._id, this).success(function() {
       console.log('Success!');
+      return status;
     }).error(function(data, status, headers, config) {
       console.log('Error!', status);
+      return status;
     });
   }
 
@@ -54,7 +59,7 @@ angular.module('babadooApp')
       var scope = this;
       var data = {};
 
-      $http.get(apiUrl + id).success(function(data) {
+      $http.get(apiUrl + id).success(function (data) {
         deferred.resolve(new GoodsModel(data));
       }).error(function() {
         deferred.reject();
@@ -62,8 +67,12 @@ angular.module('babadooApp')
       return deferred.promise;
     },
 
-    delete: function (id) {
-        console.log(id);
+    deleteByID: function (id) {
+        $http.delete(apiUrl+id).success( function (data) {
+          console.log('Goods', id, 'was removed!');
+        }).error(function (){
+          console.log('Error! Something was wrong!');
+        })
     },
 
     createEmpty: function () {

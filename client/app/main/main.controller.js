@@ -9,9 +9,9 @@ angular.module('babadooApp')
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
-    Goods.findOne('5628d9adf73b2f85235fdb74').then(function(article) {
-      $scope.article = article;
-    });
+    // Goods.findOne('5628d9adf73b2f85235fdb74').then(function(article) {
+    //   $scope.article = article;
+    // });
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;
@@ -21,19 +21,9 @@ angular.module('babadooApp')
     };
 
     $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
+      $http.post('/api/things/delete/' + thing._id);
     };
 
-    $scope.addGoods = function () {
-      $http.post('api/goods', {
-        type: 'Футболка',
-        title: 'First goods',
-        description: 'First goods description',
-        price: '123113',
-        sellerId: 'String',
-        keyWords: ['футболка', 'дешево'],
-      })
-    }
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
     });
