@@ -19,6 +19,12 @@ angular.module('babadooApp')
         },{
             original: 'https://placeimg.com/640/490/nature',
             thumbnail: 'https://placeimg.com/240/128/nature',
+        },{
+            original: 'https://placeimg.com/640/490/nature',
+            thumbnail: 'https://placeimg.com/240/128/nature',
+        },{
+            original: 'https://placeimg.com/640/490/nature',
+            thumbnail: 'https://placeimg.com/240/128/nature',
         }]
         this.goods.create()
         this.goods = Goods.createEmpty();

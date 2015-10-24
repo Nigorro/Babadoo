@@ -1,7 +1,6 @@
 'use strict';
 
 /**
- * Removes server error when user updates input
  * https://makeomatic.ru/blog/2014/09/18/Angular_data_modelling/
  */
 angular.module('babadooApp')

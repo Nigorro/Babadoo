@@ -3,16 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-          !{{goods}}
-          <div ng-if="goods" class="goods-big">
-            <h3>{{goods.title}}</h>
-            <p>{{goods.description}}</p>
-            <ul>
-              <li ng-repeat="photo in goods.photos">
-                <img src="{{photo.original}}">
-              </li>
-            </ul>
-          </div>
+          <div ng-if="goods" goods-big="goods"></div>
         </div>
     </div>
 </div>

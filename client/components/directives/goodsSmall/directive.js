@@ -10,7 +10,7 @@ angular.module('babadooApp')
 
 
     this.removeGoods = function (id) {
-      Goods.deleteByID(id);
+      Goods.removeByID(id);
       // console.log(id);
     }
   })
@@ -27,8 +27,8 @@ angular.module('babadooApp')
       scope: {
         goods: '=goodsSmall',
       },
-      link: function(scope, element, attrs, ngModel) {
-        console.log('goodsSmall directive!');
-      }
+      // link: function(scope, element, attrs, ngModel) {
+      //   console.log('goodsSmall directive!');
+      // }
     };
   });

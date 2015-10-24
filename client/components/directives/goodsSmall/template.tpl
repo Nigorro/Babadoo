@@ -4,7 +4,7 @@
         <h3>{{GoodsSmallDirectiveCtrl.goods.title}}</h3>
         <p>{{GoodsSmallDirectiveCtrl.goods.description}}</p>
         <p>
-            <button class="btn btn-primary" role="button">Подробнее</button> 
+            <a ui-sref="goods({ id: GoodsSmallDirectiveCtrl.goods._id})" class="btn btn-primary" role="button">Подробнее</a> 
             <button class="btn btn-default" role="button"
             ng-click="GoodsSmallDirectiveCtrl.removeGoods(GoodsSmallDirectiveCtrl.goods._id)">Удалить</button>
         </p>
