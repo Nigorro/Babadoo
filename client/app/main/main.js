@@ -6,6 +6,6 @@ angular.module('babadooApp')
       .state('main', {
         url: '/',
         templateUrl: 'app/main/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl as MainCtrl'
       })
   });

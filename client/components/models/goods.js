@@ -81,7 +81,6 @@ angular.module('babadooApp')
       $http.get(apiUrl + 'user/' + id).success( function (result){
         result.forEach( function (data) {
           goods.push( new GoodsModel(data));
-          console.log(data);
         });
         deferred.resolve(goods);
       }).error(function() {
@@ -93,15 +92,17 @@ angular.module('babadooApp')
       var deferred = $q.defer();
       var scope = this;
       var data = {};
+      var goods = [];
       var query = searchQuery;
-      $http.get(apiUrl + 'search/' + query).success( function (result){
-        result.forEach( function (data) {
+      $http.get(apiUrl + 'elastic/search/', query).success( function (result){
+        result.hits.hits.forEach( function (data) {
           goods.push( new GoodsModel(data));
         });
         deferred.resolve(goods);
       }).error(function() {
         deferred.reject();
       });
+      return deferred.promise;
     },
 
     createEmpty: function () {

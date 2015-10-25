@@ -88,7 +88,7 @@ exports.search = function (req, res) {
         page = req.query.page - 1 || 0,
         pageSize = req.query.pageSize || 10,
         sortingField = req.query.sortingField || 'updated:-asc';
-    console.log('!!!!!', page, pageSize, sortingField);
+
     Goods.search({
         query_string: {
             query: searchQuery
