@@ -11,5 +11,6 @@ router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.remove);
 router.get('/user/:id', controller.getAllByUserId);
+router.get('/elastic/search/', controller.search);
 
 module.exports = router;

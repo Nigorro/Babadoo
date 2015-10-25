@@ -1,22 +1,15 @@
 'use strict';
 
 var mongoose = require('mongoose'),
+    mongoosastic = require("mongoosastic"),
     Schema = mongoose.Schema;
 
 var GoodsSchema = new Schema({
     type: String,
     title: String,
     description: String,
-    date: {
-        type: Date,
-        default: Date.now,
-    },
-    updated: { 
-        type: Date, 
-        default: Date.now,
-    },
     price: {
-        type: String,
+        type: Number,
         default: 0
     },
     sellerId: String,
@@ -26,7 +19,6 @@ var GoodsSchema = new Schema({
             street: String,
         },
     },
-
     settings: {
         gender: String,
         season: String,
@@ -35,14 +27,22 @@ var GoodsSchema = new Schema({
             max: { type: Number } 
         },
     },
-
     photos: [{
         original: String,
         thumbnail: String
     }],
-
     keyWords: [],
     views: [],
-});
 
+    date: {
+        type: Date,
+        default: Date.now,
+    },
+    updated: { 
+        type: Date, 
+        default: Date.now,
+    },
+    status: String,
+});
+GoodsSchema.plugin(mongoosastic)
 module.exports = mongoose.model('Goods', GoodsSchema);

@@ -8,10 +8,11 @@ angular.module('babadooApp')
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
-
-    Goods.findAll().then(function (goods) {
-      $scope.goods = goods;
-    });
+    this.searchQuery = "?page=1&pageSize=2";
+    Goods.searchQuery(this.searchQuery);
+    // Goods.findAll().then(function (goods) {
+    //   $scope.goods = goods;
+    // });
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;

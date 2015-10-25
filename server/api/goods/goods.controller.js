@@ -14,7 +14,7 @@ var Goods = require('./goods.model');
 // Get list of Goods
 exports.index = function (req, res) {
     Goods.find({})
-        .sort({date: -1})
+        .sort({updated: -1})
         .exec(function (err, goods) {
             if (err) { return handleError(res, err); };
             return res.status(200).json(goods);
@@ -25,6 +25,13 @@ exports.index = function (req, res) {
 exports.create = function (req, res) {
     Goods.create(req.body, function (err, goods) {
         if (err) { return handleError(res, err); }
+
+        Goods.on('es-indexed', function (err, res) {
+            if (err) { return handleError(res, err); }
+            if (res) {
+                console.log('!!! Document is indexed' , res);
+            };
+        })
         return res.status(201).json(goods);
     });
 }
@@ -73,6 +80,28 @@ exports.getAllByUserId = function (req, res) {
             if (!goods) { return res.status(404).send('Not Found'); };
             return res.status(200).json(goods);
         });
+}
+
+//Elasticsearch api for Goods models
+exports.search = function (req, res) {
+    var searchQuery = req.query.q || '*',
+        page = req.query.page - 1 || 0,
+        pageSize = req.query.pageSize || 10,
+        sortingField = req.query.sortingField || 'updated:-asc';
+    console.log('!!!!!', page, pageSize, sortingField);
+    Goods.search({
+        query_string: {
+            query: searchQuery
+        }
+    },{
+        from: page,
+        size: pageSize,
+        sort: sortingField,
+        hydrate: true,
+    },function(err, results) {
+      if (err) { return handleError(res, err); }
+      return res.status(200).json(results);
+    });
 }
 
 function handleError(res, err) {
