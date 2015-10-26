@@ -94,7 +94,8 @@ angular.module('babadooApp')
       var data = {};
       var goods = [];
       var query = searchQuery;
-      $http.get(apiUrl + 'elastic/search/', query).success( function (result){
+      console.log(query)
+      $http.get(apiUrl + 'elastic/search/' + query).success( function (result){
         result.hits.hits.forEach( function (data) {
           goods.push( new GoodsModel(data));
         });

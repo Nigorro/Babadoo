@@ -2,22 +2,23 @@
 
 angular.module('babadooApp')
   .controller('MainCtrl', function ($scope, $http, socket, Goods) {
-
+    this.goods = []
     $scope.awesomeThings = [];
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
-    // this.goods = $scope.goods;
-    this.searchQuery = {
-      page: 1,
-      pageSize: 2,
-    };
+
+    // this.searchQuery = {
+    //   page: 1,
+    //   pageSize: 2,
+    // };
+    this.searchQuery = '?page=1&pageSize=2'
+
     Goods.searchQuery(this.searchQuery).then(function (data) {
-      var self = this;
-      self.goods = data;
-    })
-    console.log(this.goods);
+      this.goods = data;
+    }.bind(this));
+
     $scope.addThing = function() {
       if($scope.newThing === '') {
         return;
