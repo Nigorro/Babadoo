@@ -2,10 +2,7 @@
 
 angular.module('babadooApp')
   .controller('MainCtrl', function ($scope, $http, socket, Goods) {
-    this.goods = [];
-
-    console.log("Here's Katty!");
-
+    this.goods = []
     $scope.awesomeThings = [];
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
