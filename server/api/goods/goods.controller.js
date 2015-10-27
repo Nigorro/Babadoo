@@ -7,7 +7,7 @@
  * DELETE  /goods/:id          ->  destroy
  */
 
- 'use strict';
+'use strict';
 var _ = require('lodash');
 var Goods = require('./goods.model');
 
