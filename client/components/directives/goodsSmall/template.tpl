@@ -1,5 +1,5 @@
 <div ng-if="GoodsSmallDirectiveCtrl.goods" class="thumbnail">
-    <img ng-src="{{GoodsSmallDirectiveCtrl.goods.photos[0].original}}" ng-alt="{{GoodsSmallDirectiveCtrl.goods.title}}">
+    <img ng-src="{{GoodsSmallDirectiveCtrl.goods.photos[0].thumbnail}}" ng-alt="{{GoodsSmallDirectiveCtrl.goods.title}}">
     <div class="caption">
         <h3>{{GoodsSmallDirectiveCtrl.goods.title}}</h3>
         <p>{{GoodsSmallDirectiveCtrl.goods.description}}</p>
