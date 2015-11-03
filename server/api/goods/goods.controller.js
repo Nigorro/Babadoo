@@ -29,7 +29,7 @@ exports.create = function (req, res) {
         Goods.on('es-indexed', function (err, res) {
             if (err) { return handleError(res, err); }
             if (res) {
-                console.log('!!! Document is indexed' , res);
+                console.log('!!! Document was indexed' , res);
             };
         })
         return res.status(201).json(goods);
@@ -50,13 +50,22 @@ exports.remove = function (req, res) {
 
 // Updates an existing Goods in the DB.
 exports.update = function (req, res) {
-    if (req.body._id) { delete req.body._id; }
-    Goods.findById(require.params.id, function (err, goods) {
+    var goodsId = req.body.id || req.params.id;
+
+    if (req.body.id) { delete req.body.id; }
+    if (req.params.id) { delete req.params.id};
+    Goods.findById(goodsId, function (err, goods) {
         if (err) { return handleError(res, err); }
         if (!goods) { return res.status(404).send('Not Found'); }
-        var update = _.merge(goods, req.body);
-        update.save( function (err) {
-            if (err) { return handleError(res, err); };
+        // var update = _.merge(goods, req.body);
+        goods = _.merge(goods, req.body)
+
+        goods.markModified('photos');
+        goods.markModified('keyWords');
+        goods.markModified('views');
+        goods.save( function (err, data) {
+            if (err) { console.log(err) };
+            console.log(err, data);
             return res.status(200).json(goods)
         })
     })
@@ -107,4 +116,16 @@ exports.search = function (req, res) {
 function handleError(res, err) {
   return res.status(500).send(err);
 }
+
+function merge (obj1, obj2) {
+    var obj3 = {};
+
+    for(var attr in obj2) {
+        console.log('!', attr, obj1[attr], obj2[attr]);
+        obj1[attr].set(obj2[attr]);
+    }
+
+    return obj1;
+}
+
 

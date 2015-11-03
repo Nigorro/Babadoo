@@ -27,10 +27,7 @@ var GoodsSchema = new Schema({
             max: { type: Number } 
         },
     },
-    photos: [{
-        original: String,
-        thumbnail: String
-    }],
+    photos: [],
     keyWords: [],
     views: [],
 

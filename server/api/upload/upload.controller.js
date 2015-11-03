@@ -15,16 +15,50 @@ var _ = require('lodash'),
     fs = require('fs');
 
 exports.index = function (req, res) {
-    var uploadFolder = req.body.uploadFolder || req.params.uploadFolder || '/',
-        makeCrop = req.body.makeCrop || req.params.makeCrop || false,
-        makeThumbnail = req.body.thumbnail || req.params. makeThumbnail || false,
-        form = new multiparty.Form();
+    // var uploadFolder = req.body.uploadFolder || req.params.uploadFolder || '/',
+    //     makeCrop = req.body.makeCrop || req.params.makeCrop || false,
+    //     makeThumbnail = req.body.thumbnail || req.params. makeThumbnail || false,
+    //     form = new multiparty.Form();
 
+    var form = new multiparty.Form();
 
     form.parse(req, function (err, fields, files) {
         var uploadFiles = files;
         var images = [];
-        var savePath = './uploadFiles/' + fields.saveTo[0] + '/';
+        var imagesPath = '/uploadFiles/' + fields.saveTo[0] + '/';
+        var savePath = '.' + imagesPath;
+        var filesNumber = _.values(uploadFiles).length;
+        var filesArr = _.values(uploadFiles);
+
+
+        var uploadFiles = function (file) {
+            easyimage.resize({
+                src: file[0].path, dst: file[0].path,
+                width:1280, height:720,
+            }).then( function (image) {
+                var image = image;
+                fs.readFile(image.path, function (err, data) {
+                    if (err) { return handleError(res, err) };
+                    
+                    images.push({
+                        original: imagesPath + image.name,
+                        thumbnail: imagesPath + image.name,
+                    });
+
+                    fs.writeFile(savePath + image.name, data, function (err) {
+                        if (err) { return handleError(res, err) };
+                    });
+
+                    if (images.length == filesNumber) {
+                        return res.status(201).json(images);
+                    };
+                });
+            },
+
+            function (err) {
+                return handleError(res, err);
+            });
+        };
 
         if (!fs.existsSync(savePath)){
             fs.mkdirSync(savePath);
@@ -33,40 +67,17 @@ exports.index = function (req, res) {
         if (err) { return handleError(res, err) };
         if (!uploadFiles) { return res.status(404).send('Files are missing'); }
 
-        _.values(uploadFiles).map(function(files) {
-            for(var i in files) {
+        for (var i = 0; i < filesArr.length; i++) {
+            uploadFiles(filesArr[i]);
+        }
+        // _.values(uploadFiles).map(function(files) {
 
-                var uploadFiles = function (file) {
-                    easyimage.resize({
-                        src: file.path, dst: file.path,
-                        width:1280, height:720,
-                    }).then( function (image) {
-                        fs.readFile(image.path, function (err, data) {
-                            if (err) { return handleError(res, err) };
-                            
-                            images.push({
-                                original: savePath + image.name,
-                                thumbnail: savePath + image.name,
-                            });
+        //     for(var i in files) {
 
-                            fs.writeFile(savePath + image.name, data, function (err) {
-                                if (err) { return handleError(res, err) };
-                            });
 
-                            if (images.length == files.length) {
-                                return res.status(201).json(images);
-                            };
-                        });
-                    },
-
-                    function (err) {
-                        return handleError(res, err);
-                    });
-                };
-
-                uploadFiles(files[i]);
-            }
-        });
+        //         uploadFiles(files[i]);
+        //     }
+        // });
     })
 }
 

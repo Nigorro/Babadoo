@@ -18,17 +18,18 @@ angular.module('babadooApp')
   };
 
   GoodsModel.prototype.create = function () {
+    var deferred = $q.defer();
     $http.post(apiUrl, this).success(function (data, status, headers, config) {
-      console.log(status);
-      return status;
+      deferred.resolve(data);
     }).error( function (data, status, headers, config) {
-      console.log(status);
-      return status;
+      deferred.reject();
     });
+
+    return deferred.promise;
   };
 
-  GoodsModel.prototype.update = function () {
-    return $http.put(apiUrl + this._id, this).success(function() {
+  GoodsModel.prototype.update = function (id, goods) {
+    return $http.put(apiUrl + id, goods).success(function() {
       console.log('Success!');
       return status;
     }).error(function(data, status, headers, config) {
