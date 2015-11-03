@@ -17,7 +17,7 @@ angular.module('babadooApp')
     return {
       restrict: 'EA',
       controller: 'GoodsBigDirectiveCtrl as GoodsBigDirectiveCtrl',
-      templateUrl: '../components/directives/goodsBig/template.tpl',
+      templateUrl: 'app/components/directives/goodsBig/template.html',
       scope: {
         goods: '=goodsBig',
       },

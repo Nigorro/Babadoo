@@ -16,8 +16,8 @@ exports.index = function (req, res) {
     Goods.find({})
         .sort({updated: -1})
         .exec(function (err, goods) {
-            if (err) { return handleError(res, err); };
-            return res.status(200).json(goods);
+            if (err) { return handleError(res, err) }
+            return res.status(200).json(goods)
     });
 };
 
@@ -27,12 +27,12 @@ exports.create = function (req, res) {
         if (err) { return handleError(res, err); }
 
         Goods.on('es-indexed', function (err, res) {
-            if (err) { return handleError(res, err); }
+            if (err) { return handleError(res, err) }
             if (res) {
                 console.log('!!! Document was indexed' , res);
-            };
+            }
         })
-        return res.status(201).json(goods);
+        return res.status(201).json(goods)
     });
 }
 
@@ -42,8 +42,8 @@ exports.remove = function (req, res) {
         if (err) { return handleError(res, err); }
         if (!goods) { return res.status(404).send('Not Found'); }
         goods.remove(function(err) {
-            if(err) { return handleError(res, err); }
-            return res.status(204).send('No Content');
+            if(err) { return handleError(res, err)}
+            return res.status(204).send('No Content')
         });
     })
 }
@@ -53,10 +53,10 @@ exports.update = function (req, res) {
     var goodsId = req.body.id || req.params.id;
 
     if (req.body.id) { delete req.body.id; }
-    if (req.params.id) { delete req.params.id};
+    if (req.params.id) { delete req.params.id}
     Goods.findById(goodsId, function (err, goods) {
-        if (err) { return handleError(res, err); }
-        if (!goods) { return res.status(404).send('Not Found'); }
+        if (err) { return handleError(res, err) }
+        if (!goods) { return res.status(404).send('Not Found') }
         // var update = _.merge(goods, req.body);
         goods = _.merge(goods, req.body)
 
@@ -64,7 +64,7 @@ exports.update = function (req, res) {
         goods.markModified('keyWords');
         goods.markModified('views');
         goods.save( function (err, data) {
-            if (err) { console.log(err) };
+            if (err) { console.log(err) }
             console.log(err, data);
             return res.status(200).json(goods)
         })
@@ -74,9 +74,9 @@ exports.update = function (req, res) {
 // Get a single Goods
 exports.show = function (req, res) {
     Goods.findById(req.params.id, function (err, goods) {
-        if (err) { return handleError(res, err); };
-        if (!goods) { return res.status(404).send('Not Found'); };
-        return res.status(200).json(goods);
+        if (err) { return handleError(res, err) }
+        if (!goods) { return res.status(404).send('Not Found') }
+        return res.status(200).json(goods)
     })
 }
 
@@ -85,9 +85,9 @@ exports.getAllByUserId = function (req, res) {
     Goods.find({ sellerId: req.params.id })
         .sort({date: -1})
         .exec( function (err, goods) {
-            if (err) { return handleError(res, err); };
-            if (!goods) { return res.status(404).send('Not Found'); };
-            return res.status(200).json(goods);
+            if (err) { return handleError(res, err) }
+            if (!goods) { return res.status(404).send('Not Found') }
+            return res.status(200).json(goods)
         });
 }
 
@@ -108,8 +108,8 @@ exports.search = function (req, res) {
         sort: sortingField,
         hydrate: true,
     },function(err, results) {
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(results);
+      if (err) { return handleError(res, err) }
+      return res.status(200).json(results)
     });
 }
 

@@ -31,14 +31,14 @@ exports.index = function (req, res) {
         var filesArr = _.values(uploadFiles);
 
 
-        var uploadFiles = function (file) {
+        var upload = function (file) {
             easyimage.resize({
                 src: file[0].path, dst: file[0].path,
                 width:1280, height:720,
-            }).then( function (image) {
-                var image = image;
+            }).then( function (data) {
+                var image = data;
                 fs.readFile(image.path, function (err, data) {
-                    if (err) { return handleError(res, err) };
+                    if (err) { return handleError(res, err) }
                     
                     images.push({
                         original: imagesPath + image.name,
@@ -46,13 +46,13 @@ exports.index = function (req, res) {
                     });
 
                     fs.writeFile(savePath + image.name, data, function (err) {
-                        if (err) { return handleError(res, err) };
+                        if (err) { return handleError(res, err) }
                     });
 
-                    if (images.length == filesNumber) {
-                        return res.status(201).json(images);
-                    };
-                });
+                    if (images.length === filesNumber) {
+                        return res.status(201).json(images)
+                    }
+                })
             },
 
             function (err) {
@@ -64,20 +64,12 @@ exports.index = function (req, res) {
             fs.mkdirSync(savePath);
         }
 
-        if (err) { return handleError(res, err) };
+        if (err) { return handleError(res, err) }
         if (!uploadFiles) { return res.status(404).send('Files are missing'); }
 
         for (var i = 0; i < filesArr.length; i++) {
-            uploadFiles(filesArr[i]);
+            upload(filesArr[i]);
         }
-        // _.values(uploadFiles).map(function(files) {
-
-        //     for(var i in files) {
-
-
-        //         uploadFiles(files[i]);
-        //     }
-        // });
     })
 }
 
